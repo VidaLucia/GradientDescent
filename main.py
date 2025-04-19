@@ -8,11 +8,12 @@ def costFunction(x, y):
     return x**2 + y**2
 
 # The gradient (partial derivatives) of the function
+#returns x derivative and y derivative
 def gradient(x, y):
-    return np.array([2*x, 2*y])
+    return 2*x, 2*y
 
 # Run gradient descent and return the path of points
-def descentPathFunc(lr=0.01, steps=50, start=(4.0, 4.0)):
+def descentPathFunc(lr=0.1, steps=50, start=(4.0, 4.0)):
     path = []
     point = np.array(start)
     for _ in range(steps):
@@ -21,39 +22,28 @@ def descentPathFunc(lr=0.01, steps=50, start=(4.0, 4.0)):
     return np.array(path)
 
 def plot3DGraph():
-    fig = plt.figure()
-    ax = plt.axes(projection='3d')
+    x = np.arange(-4,4,0.05)
+    y = np.arange(-4,4,0.05)
 
-    # Define 3D surface
-    x = np.linspace(-5, 5, 50)
-    y = np.linspace(-5, 5, 50)
-    X, Y = np.meshgrid(x, y)
-    Z = costFunction(X, Y)
+    X,Y = np.meshgrid(x,y)
+    Z = costFunction(X,Y)
 
-    # Compute gradient descent path
-    path = descentPathFunc()
-    xs, ys, zs = path[:, 0], path[:, 1], path[:, 2]
+    currentPos = (3,3,costFunction(0.4,0.4))
+    #learning rate
+    lr = 0.01
+    steps = 1000
 
-    # Plot surface and initial point
-    ax.plot_surface(X, Y, Z, alpha=0.2, cmap='viridis', edgecolor='none')
-    descentPoint, = ax.plot([xs[0]], [ys[0]], [zs[0]], 'ro')  # point
-    descentPath, = ax.plot([], [], [], 'r--')  # trail
+    ax = plt.subplot(projection='3d',computed_zorder=False)
+    for _ in range(steps):
+        xDerivative,yDerivative = gradient(currentPos[0],currentPos[1])
+        XNew,YNew = currentPos[0]-lr * xDerivative,currentPos[1]-lr*yDerivative
+        currentPos = (XNew,YNew,costFunction(XNew,YNew))
 
-    # Animation function
-    def update(i):
-        descentPoint.set_data([xs[i]], [ys[i]])
-        descentPoint.set_3d_properties([zs[i]])
-        descentPath.set_data(xs[:i + 1], ys[:i + 1])
-        descentPath.set_3d_properties(zs[:i + 1])
-        return descentPoint, descentPath
+        ax.plot_surface(X,Y,Z, cmap ="viridis",zorder=0)
+        ax.scatter(currentPos[0], currentPos[1], currentPos[2],color ="magenta",zorder=1)
+        plt.pause(0.001)
+        ax.clear()
 
-    ani = animation.FuncAnimation(fig, update, frames=len(xs), interval=200, blit=False)
-
-    ax.set_title('Gradient Descent on 3D Surface')
-    ax.set_xlabel('x')
-    ax.set_ylabel('y')
-    ax.set_zlabel('f(x, y)')
-    plt.show()
 
 if __name__ == '__main__':
     plot3DGraph()

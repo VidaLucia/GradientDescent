@@ -1,22 +1,25 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
+from autograd import grad
 
 # Our function we want to minimize
-def costFunction(x, y):
-    return x**2 + y**2
+def costFunction(v): #v contains [x,y]
+    x,y = v[0],v[1]
+    return x**2-x/3 + x* y**2
 
 # Gradient of the function
-def gradient(x, y):
-    return 2*x, 2*y
+#def gradient(x, y):
+    #return 2*x, 2*y
 
+gradient = grad(costFunction)
 # Run gradient descent and return the path of points
 def descentPathFunc(lr=0.1, steps=100, start=(4.0, 4.0)):
     path = []
     point = np.array(start, dtype=np.float64)
     for _ in range(steps):
-        path.append((point[0], point[1], costFunction(*point)))
-        point -= lr * np.array(gradient(*point))
+        path.append((point[0], point[1], costFunction(point)))
+        point -= lr * gradient(point)
     return np.array(path)
 
 def plot3DGraph():
@@ -24,7 +27,7 @@ def plot3DGraph():
     x = np.arange(-4, 4, 0.05)
     y = np.arange(-4, 4, 0.05)
     X, Y = np.meshgrid(x, y)
-    Z = costFunction(X, Y)
+    Z = np.array([[costFunction(np.array([xi, yi])) for xi, yi in zip(row_x, row_y)] for row_x, row_y in zip(X, Y)])
 
     # Get descent path
     path = descentPathFunc(lr=0.01, steps=200, start=(3, 3))

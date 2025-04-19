@@ -17,9 +17,7 @@ This project visually demonstrates how **gradient descent** optimizes a function
   - Step-by-step or auto-run mode
 
 ## Technologies
-- **Python with Matplotlib (3D plots)**  
-- **JavaScript + D3.js or p5.js** for web-based interactive version  
-- **Processing** for graphical desktop apps
+- **Python with Matplotlib (3D plots)**   
 
 ## Skills You’ll Learn
 - Gradient descent math and logic

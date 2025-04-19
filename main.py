@@ -1,7 +1,9 @@
-from mpl_toolkits.mplot3d import Axes3D
+
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib.animation as animation
+
+
+#
 
 # Our function we want to minimize
 def costFunction(x, y):
@@ -42,6 +44,7 @@ def plot3DGraph():
         ax.plot_surface(X,Y,Z, cmap ="viridis",zorder=0)
         ax.scatter(currentPos[0], currentPos[1], currentPos[2],color ="magenta",zorder=1)
         plt.pause(0.001)
+        print("HI")
         ax.clear()
 
 

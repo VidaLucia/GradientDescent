@@ -8,19 +8,20 @@ This project visually demonstrates how **gradient descent** optimizes a function
 - Show the optimization path over a cost function
 - Allow real-time adjustment of learning rate and starting position
 
-## Key Features
+## Feature
 - Animate the gradient descent steps over a cost function (e.g., paraboloid or Rosenbrock)
+
+## Technologies
+- **Python with Matplotlib (3D plots)**   
+
+## Skills I've Learned
+- Gradient descent math and logic
+- 3D rendering of mathematical surfaces
+- Debugging numeric instability and overshooting
+
+## TODO:
 - Display the learning trajectory in 3D (surface plot + point)
 - User controls for:
   - Learning rate
   - Initial guess
   - Step-by-step or auto-run mode
-
-## Technologies
-- **Python with Matplotlib (3D plots)**   
-
-## Skills You’ll Learn
-- Gradient descent math and logic
-- 2D/3D rendering of mathematical surfaces
-- Real-time UI controls and animation
-- Debugging numeric instability and overshooting
